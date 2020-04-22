@@ -15,6 +15,7 @@ import { HttpConfigModule } from './shared/http/http-config.module';
 import { StorageModule } from './shared/storage/storage.module';
 import { DirectivesModule } from './shared/directives/directives.module';
 import { WINDOW_PROVIDERS } from './shared/core/providers/window.provider';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -29,7 +30,9 @@ import { WINDOW_PROVIDERS } from './shared/core/providers/window.provider';
         DirectivesModule.forRoot(),
         HttpConfigModule,
         StorageModule,
-        AuthModule.forRoot(),
+        AuthModule.forRoot(),  
+        FormsModule,   
+        ReactiveFormsModule
     ],
     declarations: [AppComponent],
     providers: [

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 // import { AuthGuard } from './shared';
 import { AuthGuardSystem } from './shared/auth/auth-guard-system';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
     { path: '', loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule), canActivate: [AuthGuardSystem] },
@@ -15,7 +16,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [
+        RouterModule.forRoot(routes),
+        FormsModule,
+        ReactiveFormsModule
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}

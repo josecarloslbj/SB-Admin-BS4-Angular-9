@@ -6,11 +6,14 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 import { CookieStorageService } from '../storage/cookie-storage.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable()
 export class AuthService {
-    tokenName = 'PDCASE_GUARDIAN_TOKEN';
+
+    baseUrl = environment.URL;
+    tokenName = 'API_ASPNETCORE3_TOKEN';
 
     userFeatures = new Subject<any>();
 
@@ -49,6 +52,7 @@ export class AuthService {
      * @return Date em que o token vai expirar
      */
     obterDataDeExpiracaoDoToken(token: string): Date {
+        debugger;
         const decoded = jwt_decode(token);
 
         if (decoded.exp === undefined) { return null; }
@@ -92,7 +96,8 @@ export class AuthService {
     //  * @return Promise com o resultado da chamada de login
     //  */
     login(user: any): any {
-        const baseUrl = 'http://localhost:5002/cadastrar/login';
+
+        const url = this.baseUrl + '/cadastrar/login';
 
         // const headers = new HttpHeaders().set('content-type', 'application/json');
         // const headers = new Headers();
@@ -108,9 +113,11 @@ export class AuthService {
         let headers = new HttpHeaders();
         headers = headers.append('Content-Type', 'application/json');
 
-        return this.http.post(baseUrl, JSON.stringify(user),  { headers })
+        return this.http.post(url, JSON.stringify(user), { headers })
             .toPromise()
-            .then(res => {
+            .then((res: any) => {
+                debugger;
+                this.gravarToken(res.body);
                 return res;
             });
 
